@@ -115,7 +115,18 @@ for( N in c(3,5,15,25,35,51,75,105)){
 <p>To estimate the out of sample error, predict on the validation set and get the accuracy from the confusion matrix.</p>
 <pre class="r"><code>p &lt;- predict(model, newdata=validation[,-53])
 accuracy &lt;- confusionMatrix(p, validation$classe)$overall[1]</code></pre>
-<p>The accuracy on validation is 0.9926933.</p>
+<p>The accuracy on validation, which is my out of sample error prediction, is 0.9926933.</p>
+<p>To predict the 20 values for the second part of the assignment, load the 20 test samples, select the same predictor names, and use the model to predict the classe.</p>
+<pre class="r"><code>pml.testing &lt;- read.csv(&quot;pml-testing.csv&quot;,na.strings=c(&quot;NA&quot;,&quot;&quot;,&quot;#DIV/0!&quot;))
+pml.data &lt;- pml.testing[,c(predictor.names )]
+pred &lt;- predict(model, newdata=pml.data)
+answers = rep(&quot;&quot;, 20)
+decoder &lt;- c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;)
+
+for (i in 1:20){
+    answers[i] &lt;- decoder[pred[i]]
+}</code></pre>
+<p>The preditions are: B, A, B, A, A, E, D, B, A, A, B, C, B, A, E, E, A, B, B, B</p>
 
 
 </div>
